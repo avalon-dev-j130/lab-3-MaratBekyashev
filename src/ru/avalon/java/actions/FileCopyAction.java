@@ -20,7 +20,7 @@ public class FileCopyAction implements Action {
     PrintWriter writer;
 
     public FileCopyAction(String params) {
-        String[] str = params.split(" ");
+        String[] str = params.split("\\s+");
 
         String inPath = str[0];
         String outPath = str[1];
@@ -34,29 +34,42 @@ public class FileCopyAction implements Action {
         /*
          * TODO №2 Реализуйте метод run класса FileCopyAction
          */
-
         // Чтение файла
-        inputFile = new File(inPath);
-        Collection<String> result = new LinkedList<>();
+        this.inputFile = new File(inPath);
+        this.lines = new LinkedList<>();
         String line;
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-            while((line = reader.readLine()) != null)
-            result.add(line);
+            BufferedReader reader = new BufferedReader(new FileReader(this.inputFile));
+            while((line = reader.readLine()) != null){
+
+                this.lines.add(line);
+                Thread.sleep(1);
+            }
         }
         catch(IOException e){
             System.out.println(e.getLocalizedMessage());
         }
 
         // Перекладывание в выходной поток
-        outputFile = new File(outPath);
-        try {
-            writer = new PrintWriter(outputFile);
+        this.outputFile = new File(this.outPath);
+        try  {
+            this.writer = new PrintWriter(this.outputFile);
+            for (String str: lines){
+                this.writer.println(str);
+                Thread.sleep(1);
+            }
+            this.writer.flush();
+            this.writer.close();
+            System.out.println("File copied");
         }
-        catch(FileNotFoundException e){
-            System.out.println(e.getLocalizedMessage());
+        catch(FileNotFoundException ex){
+            System.out.println(ex.getLocalizedMessage());
+            }
+        catch(InterruptedException ex){
+            System.out.println("Process "+ this.getClass().getCanonicalName()+ " aborted");
+            }
         };
-    }
+    };
 
     @Override
     public void close() throws Exception {

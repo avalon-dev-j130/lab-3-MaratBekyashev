@@ -9,11 +9,7 @@ package ru.avalon.java.actions;
  * основной поток исполнения.
  */
 public interface Action extends Runnable, AutoCloseable {
-
-
-    /**
-     * Запускает потоковый объект на исполнение в отдельном потоке исполнения.
-     */
+    // Запускает потоковый объект на исполнение в отдельном потоке исполнения.
     default void start() {
         /*
          * TODO №1 Реализуйте метод start интерфейса Action.

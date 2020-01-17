@@ -16,7 +16,9 @@ import java.util.Scanner;
  * @author Daniel Alpatov <danial.alpatov@gmail.com>
  */
 public class Lab3 extends ConsoleUI<Commands> {
-    Action lastAction;
+    private Action lastAction;
+    private String commandParams;
+    private Scanner scan;
     /**
      * Точка входа в приложение.
      * 
@@ -32,6 +34,7 @@ public class Lab3 extends ConsoleUI<Commands> {
      */
     Lab3() {
         super(Commands.class);
+        scan = new Scanner(System.in);
     }
 
     /**
@@ -42,13 +45,14 @@ public class Lab3 extends ConsoleUI<Commands> {
         switch (command) {
             case copy: // TODO №6 Обработайте команду copy
                 System.out.print(">> Input src and dst:");
-                Scanner scan = new Scanner(System.in);
-                String params = scan.nextLine();
-                this.lastAction = new FileCopyAction(params);
+                this.commandParams = scan.nextLine();
+                this.lastAction = new FileCopyAction(this.commandParams);
                 this.lastAction.start();
                 break;
             case move: // TODO №7 Обработайте команду move
-                this.lastAction = new FileMoveAction();
+                System.out.print("  >> Please enter filename to move and new name:");
+                this.commandParams = scan.nextLine();
+                this.lastAction = new FileMoveAction(this.commandParams);
                 this.lastAction.start();
                 break;
             case exit:
@@ -62,7 +66,8 @@ public class Lab3 extends ConsoleUI<Commands> {
                 this.lastAction.start();
                 break;
             case stop:
-
+                // реализовать логику по прерыванию последнего запущенного потока
+                this.lastAction.stop();
                 break;
         }
     }
