@@ -13,7 +13,7 @@ public class FileMoveAction implements Action {
         /*
          * TODO №4 Реализуйте метод run класса FileMoveAction
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        System.out.println("move in progress");
     }
 
     /**
