@@ -38,16 +38,18 @@ public class FileCopyAction implements Action {
         this.inputFile = new File(inPath);
         this.lines = new LinkedList<>();
         String line;
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(this.inputFile));
+        try (BufferedReader reader = new BufferedReader(new FileReader(this.inputFile))){
             while((line = reader.readLine()) != null){
-
                 this.lines.add(line);
                 Thread.sleep(1);
             }
         }
         catch(IOException e){
             System.out.println(e.getLocalizedMessage());
+        }
+        catch(InterruptedException ex){
+            System.out.println("Process "+ this.getClass().getCanonicalName()+ " aborted at read");
+            return;
         }
 
         // Перекладывание в выходной поток
@@ -64,12 +66,12 @@ public class FileCopyAction implements Action {
         }
         catch(FileNotFoundException ex){
             System.out.println(ex.getLocalizedMessage());
-            }
+        }
         catch(InterruptedException ex){
-            System.out.println("Process "+ this.getClass().getCanonicalName()+ " aborted");
-            }
-        };
+            System.out.println("Process "+ this.getClass().getCanonicalName()+ " aborted at write");
+        }
     };
+
 
     @Override
     public void close() throws Exception {
@@ -81,4 +83,5 @@ public class FileCopyAction implements Action {
            this.writer = null;
        }
     }
+
 }

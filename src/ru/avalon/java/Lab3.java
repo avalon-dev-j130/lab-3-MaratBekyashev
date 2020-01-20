@@ -61,8 +61,8 @@ public class Lab3 extends ConsoleUI<Commands> {
                 /*
                  * TODO №9 Обработайте необработанные команды
                  */
-            case myCommand1:
-                this.lastAction = new MyCommand1Action();
+            case myCmd:
+                this.lastAction = new MyCmdAction();
                 this.lastAction.start();
                 break;
             case stop:

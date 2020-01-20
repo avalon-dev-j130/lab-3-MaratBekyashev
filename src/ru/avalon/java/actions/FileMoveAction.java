@@ -31,9 +31,10 @@ public class FileMoveAction implements Action {
         this.inputFile = new File(this.srcFileName);
         this.outputFile = new File(this.newFileName);
 
-
         if (this.inputFile.exists()){
-           this.inputFile.renameTo(this.outputFile);
+           if (this.inputFile.renameTo(this.outputFile))
+              System.out.println("file moved successfully");
+
         }
         else
             System.out.println("Source filename does not exist");
@@ -44,7 +45,7 @@ public class FileMoveAction implements Action {
         /*
          * TODO №5 Реализуйте метод close класса FileMoveAction
          */
-
+        this.inputFile = null;
+        this.outputFile = null;
     }
-
 }

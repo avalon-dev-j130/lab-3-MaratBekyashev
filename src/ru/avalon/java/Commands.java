@@ -7,7 +7,7 @@ public enum Commands {
     move,
     copy,
     exit,
-    myCommand1,
+    myCmd,
     stop
 
     /*
