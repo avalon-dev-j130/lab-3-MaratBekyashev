@@ -9,15 +9,30 @@ package ru.avalon.java.actions;
  * основной поток исполнения.
  */
 public interface Action extends Runnable, AutoCloseable {
-    /**
-     * Запускает потоковый объект на исполнение в отдельном
-     * потоке исполнения.
-     */
+    //Thread innerThread = new Thread();
+    // Запускает потоковый объект на исполнение в отдельном потоке исполнения.
     default void start() {
         /*
          * TODO №1 Реализуйте метод start интерфейса Action.
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        Thread thread = new Thread(this);
+        thread.setName(this.getClass().getCanonicalName());
+        thread.start();
+
+        //innerThread.setName(this.getClass().getCanonicalName());
+        //innerThread.start();
+
     }
-    
+
+    // Прервать текущий поток
+     default void stop(){
+        Thread th = Thread.currentThread();
+        System.out.println(th.getName()+ " thread will be interrupted");
+        th.interrupt();
+    }
+
+     default void close() {
+         System.out.println("Some resources should be closed here");
+     }
+
 }
