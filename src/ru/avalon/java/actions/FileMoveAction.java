@@ -34,14 +34,13 @@ public class FileMoveAction implements Action {
         if (this.inputFile.exists()){
            if (this.inputFile.renameTo(this.outputFile))
               System.out.println("file moved successfully");
-
         }
         else
             System.out.println("Source filename does not exist");
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         /*
          * TODO №5 Реализуйте метод close класса FileMoveAction
          */

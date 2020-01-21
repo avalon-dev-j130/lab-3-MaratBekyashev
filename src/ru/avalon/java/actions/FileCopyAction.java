@@ -69,12 +69,12 @@ public class FileCopyAction implements Action {
         }
         catch(InterruptedException ex){
             System.out.println("Process "+ this.getClass().getCanonicalName()+ " aborted at write");
+            return;
         }
     };
 
-
     @Override
-    public void close() throws Exception {
+    public void close()  {
         /*
          * TODO №3 Реализуйте метод close класса FileCopyAction
          */

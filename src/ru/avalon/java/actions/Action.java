@@ -15,7 +15,6 @@ public interface Action extends Runnable, AutoCloseable {
         /*
          * TODO №1 Реализуйте метод start интерфейса Action.
          */
-
         Thread thread = new Thread(this);
         thread.setName(this.getClass().getCanonicalName());
         thread.start();
@@ -31,5 +30,9 @@ public interface Action extends Runnable, AutoCloseable {
         System.out.println(th.getName()+ " thread will be interrupted");
         th.interrupt();
     }
-    
+
+     default void close() {
+         System.out.println("Some resources should be closed here");
+     }
+
 }

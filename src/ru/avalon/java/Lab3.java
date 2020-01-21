@@ -69,6 +69,8 @@ public class Lab3 extends ConsoleUI<Commands> {
                 // реализовать логику по прерыванию последнего запущенного потока
                 this.lastAction.stop();
                 break;
+            default:
+                System.out.println("Wrong command entered");
         }
     }
     
