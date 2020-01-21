@@ -47,4 +47,6 @@ public class FileMoveAction implements Action {
         this.inputFile = null;
         this.outputFile = null;
     }
+//    public void stop(){}
+
 }

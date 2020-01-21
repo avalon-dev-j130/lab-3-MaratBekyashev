@@ -11,7 +11,7 @@ import java.util.LinkedList;
  * Действие, которое копирует файлы в пределах дискового
  * пространства.
  */
-public class FileCopyAction implements Action {
+public class FileCopyAction extends ActionClass implements Action {
     private String inPath;
     private String outPath;
     private File inputFile;
@@ -22,8 +22,8 @@ public class FileCopyAction implements Action {
     public FileCopyAction(String params) {
         String[] str = params.split("\\s+");
 
-        String inPath = str[0];
-        String outPath = str[1];
+        String inPath = "d:\\users\\old.txt";//str[0];
+        String outPath = "d:\\users\\new.txt"; //str[1];
 
         this.inPath = inPath;
         this.outPath = outPath;
@@ -40,16 +40,18 @@ public class FileCopyAction implements Action {
         String line;
         try (BufferedReader reader = new BufferedReader(new FileReader(this.inputFile))){
             while((line = reader.readLine()) != null){
-                this.lines.add(line);
-                Thread.sleep(1);
+                try{
+                    this.lines.add(line);
+                    Thread.sleep(2000);
+                }
+                catch(InterruptedException ex){
+                    System.out.println("Process "+ this.getClass().getCanonicalName()+ " aborted at read");
+                    break;
+                }
             }
         }
         catch(IOException e){
             System.out.println(e.getLocalizedMessage());
-        }
-        catch(InterruptedException ex){
-            System.out.println("Process "+ this.getClass().getCanonicalName()+ " aborted at read");
-            return;
         }
 
         // Перекладывание в выходной поток
@@ -57,8 +59,15 @@ public class FileCopyAction implements Action {
         try  {
             this.writer = new PrintWriter(this.outputFile);
             for (String str: lines){
-                this.writer.println(str);
-                Thread.sleep(1);
+                try{
+                    this.writer.println(str);
+                    Thread.sleep(1);
+                }
+                catch(InterruptedException ex){
+                    System.out.println("Process "+ this.getClass().getCanonicalName()+ " aborted at write");
+                    return;
+                }
+
             }
             this.writer.flush();
             this.writer.close();
@@ -66,10 +75,6 @@ public class FileCopyAction implements Action {
         }
         catch(FileNotFoundException ex){
             System.out.println(ex.getLocalizedMessage());
-        }
-        catch(InterruptedException ex){
-            System.out.println("Process "+ this.getClass().getCanonicalName()+ " aborted at write");
-            return;
         }
     };
 
@@ -83,5 +88,4 @@ public class FileCopyAction implements Action {
            this.writer = null;
        }
     }
-
 }
